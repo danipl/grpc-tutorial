@@ -41,6 +41,7 @@ dependencies {
     api("io.grpc:grpc-protobuf:1.47.0")
     api("io.grpc:grpc-kotlin-stub:1.3.0")
     api("io.grpc:grpc-stub:1.47.0")
+    implementation("io.grpc:grpc-netty-shaded:1.48.0")
 
     api("com.google.protobuf:protobuf-gradle-plugin:0.8.19")
     api("com.google.protobuf:protobuf-java-util:3.21.3")
