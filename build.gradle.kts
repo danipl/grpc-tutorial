@@ -11,12 +11,10 @@ plugins {
     java
     idea
     kotlin("jvm") version "1.7.10"
+    // https://github.com/google/protobuf-gradle-plugin/releases
     id("com.google.protobuf") version "0.8.19"
     application
 }
-
-group = "org.example"
-version = "1.0.0-SNAPSHOT"
 
 allprojects {
     repositories {
@@ -33,21 +31,16 @@ tasks.withType<JavaCompile> {
 }
 
 dependencies {
-    //api(kotlin("stdlib-jdk8"))
+    api("io.grpc:grpc-protobuf:${project.ext["grpc-protobuf.version"]}")
+    api("io.grpc:grpc-stub:${project.ext["grpc-protobuf.version"]}")
+    api("io.grpc:grpc-netty-shaded:${project.ext["grpc-protobuf.version"]}")
+    api("io.grpc:grpc-kotlin-stub:${project.ext["grpc-kotlin-stub.version"]}")
 
-    //api("io.grpc:protoc-gen-grpc-java:1.48.0")
-    //api("io.grpc:protoc-gen-grpc-kotlin:1.3.0")
+    api("com.google.protobuf:protobuf-gradle-plugin:${project.ext["protobuf.gradle.plugin.version"]}")
+    api("com.google.protobuf:protobuf-java-util:${project.ext["protobuf-java-util.version"]}")
+    api("com.google.protobuf:protobuf-kotlin:${project.ext["protobuf-kotlin.version"]}")
 
-    api("io.grpc:grpc-protobuf:1.47.0")
-    api("io.grpc:grpc-kotlin-stub:1.3.0")
-    api("io.grpc:grpc-stub:1.47.0")
-    implementation("io.grpc:grpc-netty-shaded:1.48.0")
-
-    api("com.google.protobuf:protobuf-gradle-plugin:0.8.19")
-    api("com.google.protobuf:protobuf-java-util:3.21.3")
-    api("com.google.protobuf:protobuf-kotlin:3.21.3")
-
-    //api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:${project.ext["kotlinx-coroutines-core.version"]}")
 
     testImplementation(kotlin("test"))
 }
@@ -67,11 +60,19 @@ application {
     mainClass.set("MainKt")
 }
 
+sourceSets {
+    val main by getting { }
+    main.java.srcDirs("build/generated/source/proto/main/grpc")
+    main.java.srcDirs("build/generated/source/proto/main/grpckt")
+    main.java.srcDirs("build/generated/source/proto/main/java")
+    main.java.srcDirs("build/generated/source/proto/main/kotlin")
+}
+
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.21.3"
     }
-    generatedFilesBaseDir = "$projectDir/src"
+    //generatedFilesBaseDir = "$projectDir/src"
     plugins {
         id("grpc") {
             artifact = "io.grpc:protoc-gen-grpc-java:1.48.0"
