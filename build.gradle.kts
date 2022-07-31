@@ -35,6 +35,7 @@ dependencies {
     api("io.grpc:grpc-stub:${project.ext["grpc-protobuf.version"]}")
     api("io.grpc:grpc-netty-shaded:${project.ext["grpc-protobuf.version"]}")
     api("io.grpc:grpc-kotlin-stub:${project.ext["grpc-kotlin-stub.version"]}")
+    api("com.vysapp:proto-model:${project.ext["proto-model.version"]}")
 
     api("com.google.protobuf:protobuf-gradle-plugin:${project.ext["protobuf.gradle.plugin.version"]}")
     api("com.google.protobuf:protobuf-java-util:${project.ext["protobuf-java-util.version"]}")
@@ -66,6 +67,12 @@ sourceSets {
     main.java.srcDirs("build/generated/source/proto/main/grpckt")
     main.java.srcDirs("build/generated/source/proto/main/java")
     main.java.srcDirs("build/generated/source/proto/main/kotlin")
+
+    main {
+        proto {
+            srcDir("*.proto")
+        }
+    }
 }
 
 protobuf {
