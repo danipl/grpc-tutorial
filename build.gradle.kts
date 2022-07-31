@@ -67,12 +67,6 @@ sourceSets {
     main.java.srcDirs("build/generated/source/proto/main/grpckt")
     main.java.srcDirs("build/generated/source/proto/main/java")
     main.java.srcDirs("build/generated/source/proto/main/kotlin")
-
-    main {
-        proto {
-            srcDir("*.proto")
-        }
-    }
 }
 
 protobuf {
